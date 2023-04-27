@@ -19,12 +19,9 @@ app = Flask(__name__)
 
 @app.route("/communities")
 def communities_api():
-    communities_json=communities.find({})
-    communities_list=[]
-    for each in communities_json:
-        each.pop("_id")
-        communities_list.append(each)
-    return jsonify(communities_list)
+    communities_json=communities.find_one({})
+    communities_json.pop("_id")
+    return jsonify(communities_json)
 
 # Filter out 0 in LEP Population (To not show languages with 0 speakers every single time)
 # We could filter out borough/language or both in API call, bc mongo querying is easier/faster than programatically filtering in JS (TBD)
