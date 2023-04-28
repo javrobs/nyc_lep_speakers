@@ -24,13 +24,12 @@ def communities_api():
     communities_json.pop("_id")
     return jsonify(communities_json)
 
-# Filter out 0 in LEP Population (To not show languages with 0 speakers every single time)
+
 # We could filter out borough/language or both in API call, bc mongo querying is easier/faster than programatically filtering in JS (TBD)
-
-
 @app.route("/populations")
 def population_api():
-    query={} # depending on API call maybe? -dropdown menu from site
+    # Filter out 0 in LEP Population (To not show languages with 0 speakers every single time)
+    query={'LEP Population (Estimate)':{"$gt":0}} # depending on API call maybe? -dropdown menu from site
     population_json=populations.find(query)
     population_list=[]
     for each in population_json:
