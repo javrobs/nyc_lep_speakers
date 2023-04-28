@@ -1,6 +1,7 @@
 #Import flask and jsonify to run the api
 from flask import Flask,jsonify
 from pymongo import MongoClient
+from flask_cors import CORS
 
 # Create an instance of MongoClient
 client=MongoClient(port=27017)
@@ -15,7 +16,7 @@ communities=languages.communities
 # Define app to run api using Flask
 app = Flask(__name__)
 
-
+CORS(app)
 
 @app.route("/communities")
 def communities_api():
@@ -27,7 +28,7 @@ def communities_api():
 # We could filter out borough/language or both in API call, bc mongo querying is easier/faster than programatically filtering in JS (TBD)
 
 
-@app.route("/populations/{language}")
+@app.route("/populations")
 def population_api():
     query={} # depending on API call maybe? -dropdown menu from site
     population_json=populations.find(query)
