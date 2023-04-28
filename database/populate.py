@@ -4,9 +4,9 @@
 
 #Import dependecies
 from pymongo import MongoClient
-import pandas as pd
 import json
 import csv
+import os
 
 #Set up MongoClient
 client=MongoClient(port=27017)
@@ -28,17 +28,19 @@ populations=languages["populations"]
 
 
 #Open geojson file and save in data variable
-with open("../downloaded_data/Community_Districts.geojson") as file:
+jsonpath = os.path.join('..', 'downloaded_data', 'Community_Districts.geojson')
+with open(jsonpath) as file:
     data = json.load(file)
 
 #Insert geojson to communities collection
 communities.insert_one(data)
-print("Created communities collection")
-
+print(f"Created communities collection, added {communities.count_documents({})} documents")
 
 
 #Open csv file and save in data variable
-with open("../downloaded_data/Population_and_Languages_of_the_Limited_English_Proficient__LEP__Speakers_by_Community_District.csv") as file:
+
+csvpath = os.path.join('..', 'downloaded_data', 'Population_and_Languages_of_the_Limited_English_Proficient__LEP__Speakers_by_Community_District.csv')
+with open(csvpath) as file:
     data = csv.reader(file)
     
     #Define headers to be keys in json
@@ -58,7 +60,11 @@ with open("../downloaded_data/Population_and_Languages_of_the_Limited_English_Pr
 
 #Insert list of dictionaries to populations collection
 populations.insert_many(populations_data)
-print("Created populations collection")
-
+print(f"Created populations collection, added {populations.count_documents({})} documents")
+print(f"Example: {populations.find_one({})}")
+populations.update_many({},[{"$set":{"CVALEP Population (Estimate)":{"$toInt":"$CVALEP Population (Estimate)"},
+                                     "LEP Population (Estimate)":{"$toInt":"$LEP Population (Estimate)"},
+                                     "% of CVALEP Population":{"$toDouble":"$% of CVALEP Population"},
+                                     "% of LEP Population":{"$toDouble":"$% of LEP Population"}}}])
 #Show Mongo databases
 print(f"Database list in Mongo (after adding): {client.list_database_names()}")
