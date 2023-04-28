@@ -27,7 +27,7 @@ def communities_api():
 # We could filter out borough/language or both in API call, bc mongo querying is easier/faster than programatically filtering in JS (TBD)
 
 
-@app.route("/populations")
+@app.route("/populations/{language}")
 def population_api():
     query={} # depending on API call maybe? -dropdown menu from site
     population_json=populations.find(query)
