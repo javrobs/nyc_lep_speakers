@@ -4,7 +4,6 @@
 
 #Import dependecies
 from pymongo import MongoClient
-import pandas as pd
 import json
 import csv
 import os
@@ -38,7 +37,6 @@ communities.insert_one(data)
 print(f"Created communities collection, added {communities.count_documents({})} documents")
 
 
-
 #Open csv file and save in data variable
 
 csvpath = os.path.join('..', 'downloaded_data', 'Population_and_Languages_of_the_Limited_English_Proficient__LEP__Speakers_by_Community_District.csv')
@@ -63,7 +61,7 @@ with open(csvpath) as file:
 #Insert list of dictionaries to populations collection
 populations.insert_many(populations_data)
 print(f"Created populations collection, added {populations.count_documents({})} documents")
-print(populations.find_one({}))
+print(f"Example: {populations.find_one({})}")
 populations.update_many({},[{"$set":{"CVALEP Population (Estimate)":{"$toInt":"$CVALEP Population (Estimate)"},
                                      "LEP Population (Estimate)":{"$toInt":"$LEP Population (Estimate)"},
                                      "% of CVALEP Population":{"$toDouble":"$% of CVALEP Population"},
