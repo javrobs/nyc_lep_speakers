@@ -1,27 +1,36 @@
-// const URL = "http://localhost:5000/populations";
-const URL = "https://data.cityofnewyork.us/resource/ajin-gkbp.json";
+const URL = "http://localhost:5000/populations_all";
+// const URL = "https://data.cityofnewyork.us/resource/ajin-gkbp.json";
 
 function setUp(){
     d3.json(URL).then((data)=>{
         console.log("here is the JSON data!!!")
         console.log(data);
         // fetch languages for dropdown menu
-        let languages = data.map(row =>  {
-            // return row.Language;
-            return row.language;
+        let languages=[]
+        data.forEach(row =>  {
+            if (!languages.includes(row.Language)){
+            languages.push(row.Language);
+            }
         });
+        languages.sort()
         console.log(languages);
+        d3.select('select').append('option').attr("value", "All").text("All");
         languages.forEach(row => {
             d3.select('select').append('option').attr("value" , row).text(row);
         });
-        optionChanged(languages[0]);
-        });
-    }
+        optionChanged("All");
+    });
+}
 
 function optionChanged(subjectLanguage) {
     console.log(subjectLanguage);
     demoBox(subjectLanguage);
-    // sunburstFilter(subjectLanguage);
+    if (subjectLanguage==="All"){
+        allLanguages();
+    }
+    else {
+    sunburstFilter(subjectLanguage);
+    }
 }
 
 function demoBox(subjectLanguage) {
@@ -30,12 +39,7 @@ function demoBox(subjectLanguage) {
     d3.json(URL).then((data) => {
         panel.html('');
         panel.append('h6').text(`we're doing a demobox for: ${subjectLanguage}`)
-    // ${key.toUpperCase()}
-    
-
-    //     let panelInfo = data.map
-    //     Object.entries(panelInfo)
-    // })
 });
 }
+
 setUp();

@@ -18,18 +18,25 @@ app = Flask(__name__)
 
 CORS(app)
 
+@app.route("/")
+def home():
+    return "This site is for developers only<br>\
+            These are the possible routes:<br>\
+            <a href='http://127.0.0.1:5000/communities'>/communities</a><br>\
+            <a href='http://127.0.0.1:5000/populations_all'>/populations_all</a><br>\
+            <a href='http://127.0.0.1:5000/populations/Spanish'>/populations/language </a> (Ex. Spanish)<br>\
+            <a href='http://127.0.0.1:5000/demographic_all'>/demographic_all</a><br>"
+
 @app.route("/communities")
 def communities_api():
     communities_json=communities.find_one({})
     communities_json.pop("_id")
     return jsonify(communities_json)
 
-
-# We could filter out borough/language or both in API call, bc mongo querying is easier/faster than programatically filtering in JS (TBD)
-@app.route("/populations")
+@app.route("/populations_all")
 def population_api():
     # Filter out 0 in LEP Population (To not show languages with 0 speakers every single time)
-    query={'LEP Population (Estimate)':{"$gt":0}} # depending on API call maybe? -dropdown menu from site
+    query={'LEP Population (Estimate)':{"$gt":0}}
     population_json=populations.find(query)
     population_list=[]
     for each in population_json:
@@ -37,7 +44,19 @@ def population_api():
         population_list.append(each)
     return jsonify(population_list)
 
+@app.route("/populations/<language>")
+def population_language_api(language):
+    query={'LEP Population (Estimate)':{"$gt":0},'Language':language}
+    population_json=populations.find(query)
+    population_list=[]
+    for each in population_json:
+        each.pop("_id")
+        population_list.append(each)
+    return jsonify(population_list)
 
+@app.route("/demographic_all")
+def demographic_api():
+    return "Work in progress: what data do we want? Is it easier to obtain from mongo query, to populate demographic info table filtered by language/all"
         
 #Run app code
 if __name__=="__main__":
