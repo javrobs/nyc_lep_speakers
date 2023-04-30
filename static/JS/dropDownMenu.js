@@ -1,4 +1,4 @@
-const URL = "https://data.cityofnewyork.us/resource/ajin-gkbp.json";
+// const URL = "http://localhost:5000/populations";
 
 function setUp(){
     d3.json(URL).then((data)=>{
@@ -6,9 +6,10 @@ function setUp(){
         console.log(data);
         // fetch languages for dropdown menu
         let languages = data.map(row =>  {
+            // return row.Language;
             return row.language;
         });
-        // console.log(languages);
+        console.log(languages);
         languages.forEach(row => {
             d3.select('select').append('option').attr("value" , row).text(row);
         })
