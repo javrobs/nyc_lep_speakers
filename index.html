@@ -22,7 +22,8 @@
       <div class="col-md-3">
         <div class="well">
           <h5>Language:</h5>
-          <select id="selDataset"><option>All</option></select>
+          <!-- <select id="selDataset"><option>All</option></select> -->
+          <select id="selDataset" onchange="optionChanged(this.value)"></select>
         </div>
         <div class="panel panel-primary">
           <div class="panel-heading">
@@ -45,7 +46,9 @@
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <!-- <script src="static/js/map.js"></script> -->
-  <script src="static/js/sunburst.js"></script>
+  <!-- <script src="static/js/sunburst.js"></script> -->
+  <script src="static/js/dropDownMenu.js"></script>
+
   
 </body>
 
