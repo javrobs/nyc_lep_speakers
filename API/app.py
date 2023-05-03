@@ -2,6 +2,7 @@
 from flask import Flask,jsonify
 from pymongo import MongoClient
 from flask_cors import CORS
+import pandas as pd
 
 # Create an instance of MongoClient
 client=MongoClient(port=27017)
@@ -16,7 +17,7 @@ communities=languages.communities
 # Define app to run api using Flask
 app = Flask(__name__)
 
-CORS(app)
+CORS(app, origins=["http://localhost:8000"])
 
 @app.route("/")
 def home():
@@ -25,7 +26,9 @@ def home():
             <a href='http://127.0.0.1:5000/communities'>/communities</a><br>\
             <a href='http://127.0.0.1:5000/populations_all'>/populations_all</a><br>\
             <a href='http://127.0.0.1:5000/populations/Spanish'>/populations/language </a> (Ex. Spanish)<br>\
-            <a href='http://127.0.0.1:5000/demographic_all'>/demographic_all</a><br>"
+            <a href='http://127.0.0.1:5000/demographic_all'>/demographic_all</a><br>\
+            <a href='http://127.0.0.1:5000/demographic/Spanish'>/populations/language </a> (Ex. Spanish)<br>"
+            
 
 @app.route("/communities")
 def communities_api():
@@ -55,8 +58,21 @@ def population_language_api(language):
     return jsonify(population_list)
 
 @app.route("/demographic_all")
-def demographic_api():
-    return "Work in progress: what data do we want? Is it easier to obtain from mongo query, to populate demographic info table filtered by language/all"
+def demographics_all_api():
+    # Filter out 0 in LEP Population (To not show languages  with 0 speakers every single time)
+    query={'LEP Population (Estimate)':{"$gt":0}}
+    population_json=populations.find(query)
+    total_population_df = pd.DataFrame(population_json)
+    total_population=sum(total_population_df['LEP Population (Estimate)'])
+    return ({'result':total_population})
+
+@app.route("/demographic/<language>")
+def demographic_api(language):
+    match_query= {'$match':{'Language': language}}
+    group_query = {'$group':{'_id':'$Language','Lep Population':{'$sum':'$LEP Population (Estimate)'}}}
+    pipeline=[match_query,group_query]
+    results= list(populations.aggregate(pipeline))
+    return jsonify(results)
         
 #Run app code
 if __name__=="__main__":
