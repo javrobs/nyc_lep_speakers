@@ -60,16 +60,16 @@ def population_language_api(language):
 @app.route("/demographic_all")
 def demographics_all_api():
     # Filter out 0 in LEP Population (To not show languages  with 0 speakers every single time)
-    # query={'LEP Population (Estimate)':{"$gt":0}}
-    # population_json=populations.find(query)
-    # total_population_df = pd.DataFrame(population_json)
-    # total_population=sum(total_population_df['LEP Population (Estimate)'])
-    # return ({'result':total_population})
     query={'LEP Population (Estimate)':{"$gt":0}}
-    sort=[('LEP Population (Estimate)',-1)]
-    limit=5
-    demo_data=list(populations.find(query).sort(sort).limit(limit))
-    return jsonify(demo_data)
+    population_json=populations.find(query)
+    total_population_df = pd.DataFrame(population_json)
+    total_population=sum(total_population_df['LEP Population (Estimate)'])
+    return ({'result':total_population})
+    # query={'LEP Population (Estimate)':{"$gt":0}}
+    # sort=[('LEP Population (Estimate)',-1)]
+    # limit=5
+    # demo_data=list(populations.find(query).sort(sort).limit(limit))
+    # return jsonify(demo_data)
 
 
     
