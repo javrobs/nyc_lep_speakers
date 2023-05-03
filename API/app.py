@@ -65,6 +65,14 @@ def demographics_all_api():
     total_population_df = pd.DataFrame(population_json)
     total_population=sum(total_population_df['LEP Population (Estimate)'])
     return ({'result':total_population})
+    # query={'LEP Population (Estimate)':{"$gt":0}}
+    # sort=[('LEP Population (Estimate)',-1)]
+    # limit=5
+    # demo_data=list(populations.find(query).sort(sort).limit(limit))
+    # return jsonify(demo_data)
+
+
+    
 
 @app.route("/demographic/<language>")
 def demographic_api(language):
