@@ -34,15 +34,36 @@ def home():
 
 @app.route("/communities_all")
 def communities_api():
-    communities_json=communities.find_one({})
-    communities_json.pop("_id")
-    return jsonify(communities_json)
+    com_dict = communities.find_one({})
+    com_dict.pop("_id")
+    group = [{"$group":{"_id":"$Borough Community District Code", "sum":{"$sum":"$LEP Population (Estimate)"}}}]
+    pop_dict= list(populations.aggregate(group))
+    merged = {}
+    for each in pop_dict:
+        merged[each ["_id"]] = each ["sum"]
+    for each in com_dict["features"]:
+        try: 
+            each["properties"]["population"]=merged[each["properties"]["boro_cd"]]
+        except: 
+            each["properties"]["population"]=0
+    return jsonify(com_dict)
 
 @app.route("/communities/<language>")
 def communities_language_api(language):
-    communities_json=communities.find_one({})
-    communities_json.pop("_id")
-    return jsonify(communities_json)
+    com_dict = communities.find_one({})
+    com_dict.pop("_id")
+    query = {"Language" : language}
+    exclude = {"Language": 1, "LEP Population (Estimate)":1, "Borough Community District Code": 1}
+    pop_dict= list(populations.find(query, exclude))
+    merged = {}
+    for each in pop_dict:
+        merged[each ["Borough Community District Code"]] = each ["LEP Population (Estimate)"]
+    for each in com_dict["features"]:
+        try: 
+            each["properties"]["population"]=merged[each["properties"]["boro_cd"]]
+        except: 
+            each["properties"]["population"]=0
+    return jsonify(com_dict)
 
 
 @app.route("/populations_all")
