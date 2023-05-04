@@ -48,6 +48,30 @@ function find_Code(boro_cd) {
         return -1
 }// find_Code()
 
+
+
+function max_value(data) {
+
+    // let max = 0;
+
+    let population = data.features.map(element => {
+
+/*         if (element > max) {
+
+            max = element;
+        } */
+
+        return element.properties.population;
+
+    });
+
+    return Math.max(population);
+
+} // max_value
+
+
+
+
 function find_Speakers(p_code) {
 
     let found = false;
@@ -67,7 +91,7 @@ function find_Speakers(p_code) {
 
 
 const link1 = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/15-Mapping-Web/nyc.geojson";
-const link2="http://127.0.0.1:5000/communities_all"
+const link2 = "http://127.0.0.1:5000/communities_all"
 
 d3.json(link1).then((nyc_polygons) => {
     console.log(nyc_polygons);
@@ -111,23 +135,23 @@ d3.json(link2).then((nyc_polygons) => {
         style: (feature) => makeStyle(feature),
         onEachFeature: (feature, layer) => {
 
-                layer.bindPopup(`<h1>${feature.properties.boro_cd}</h1> <hr> <h2>${feature.properties.population}</h2>`);
-                layer.on({
-                    mouseover: (event) => {
-                        layer = event.target;
-                        layer.setStyle({
-                            fillOpacity: .9,
-                            weight: 2
-                        });
-                    },
-                    mouseout: (event) => {
-                        layer = event.target;
-                        layer.setStyle({
-                            fillOpacity: .5,
-                            weight: 1.5
-                        });
-                    }
-                })
+            layer.bindPopup(`<h1>${feature.properties.boro_cd}</h1> <hr> <h2>${feature.properties.population}</h2>`);
+            layer.on({
+                mouseover: (event) => {
+                    layer = event.target;
+                    layer.setStyle({
+                        fillOpacity: .9,
+                        weight: 2
+                    });
+                },
+                mouseout: (event) => {
+                    layer = event.target;
+                    layer.setStyle({
+                        fillOpacity: .5,
+                        weight: 1.5
+                    });
+                }
+            })
         }
     }).addTo(myMap);
 
