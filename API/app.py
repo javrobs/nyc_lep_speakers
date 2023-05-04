@@ -24,18 +24,26 @@ CORS(app)
 def home():
     return "This site is for developers only<br>\
             These are the possible routes:<br>\
-            <a href='http://127.0.0.1:5000/communities'>/communities</a><br>\
+            <a href='http://127.0.0.1:5000/communities_all'>/communities_all</a><br>\
+            <a href='http://127.0.0.1:5000/communities/Spanish'>/communities_all</a><br>\
             <a href='http://127.0.0.1:5000/populations_all'>/populations_all</a><br>\
             <a href='http://127.0.0.1:5000/populations/Spanish'>/populations/language </a> (Ex. Spanish)<br>\
             <a href='http://127.0.0.1:5000/demographic_all'>/demographic_all</a><br>\
             <a href='http://127.0.0.1:5000/demographic/Spanish'>/demographic/language </a> (Ex. Spanish)<br>"
             
 
-@app.route("/communities")
+@app.route("/communities_all")
 def communities_api():
     communities_json=communities.find_one({})
     communities_json.pop("_id")
     return jsonify(communities_json)
+
+@app.route("/communities/<language>")
+def communities_language_api(language):
+    communities_json=communities.find_one({})
+    communities_json.pop("_id")
+    return jsonify(communities_json)
+
 
 @app.route("/populations_all")
 def population_api():
