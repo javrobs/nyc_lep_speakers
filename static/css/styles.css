@@ -1,0 +1,33 @@
+.demo_header {
+    font-weight: bold;
+}
+
+.demo_info {
+    color: #176F6A;
+    margin:0;
+}
+
+body{
+    background: url("../../images/nyc_bg.jpg");
+    background-size: cover;
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+#max{
+    height:1000px;
+}
+
+#same-height{
+    height:800px;
+}
+
+#selDataset{
+    width:100%
+}
+
+
+/* Foto de <a href="https://unsplash.com/@jonathanroger?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Jonathan Roger</a> en <a href="https://unsplash.com/es/fotos/LY1eyQMFeyo?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+  
+
+https://unsplash.com/es/fotos/LY1eyQMFeyo */

@@ -25,7 +25,7 @@ def home():
     return "This site is for developers only<br>\
             These are the possible routes:<br>\
             <a href='http://127.0.0.1:5000/communities_all'>/communities_all</a><br>\
-            <a href='http://127.0.0.1:5000/communities/Spanish'>/communities_all</a><br>\
+            <a href='http://127.0.0.1:5000/communities/Spanish'>/communities/Spanish</a> (Ex. Spanish)<br>\
             <a href='http://127.0.0.1:5000/populations_all'>/populations_all</a><br>\
             <a href='http://127.0.0.1:5000/populations/Spanish'>/populations/language </a> (Ex. Spanish)<br>\
             <a href='http://127.0.0.1:5000/demographic_all'>/demographic_all</a><br>\
@@ -95,8 +95,8 @@ def demographics_all_api():
     total_population_df = pd.DataFrame(population_json)
     total_population=sum(total_population_df['LEP Population (Estimate)'])
     response_dict = {}
-    response_dict["language"]="ALL"
-    response_dict["total_lep_population"] = total_population
+    response_dict["Language"]="All"
+    response_dict["Total LEP population"] = total_population
     
 # information for BIGGEST  5 LEP communities
     query={'LEP Population (Estimate)':{"$gt":0}}
@@ -108,7 +108,7 @@ def demographics_all_api():
     for each in demo_data:
         each.pop("_id")
         demo_list.append(each)
-    response_dict["biggest_communities"]=demo_list
+    response_dict["Biggest Communities"]=demo_list
     return jsonify(response_dict)
 
 
@@ -126,20 +126,20 @@ def demographic_api(language):
     pipeline=[match_query,group_query]
     language_sum= list(populations.aggregate(pipeline))[0]['sum']
     result_dict={}
-    result_dict['LEP_percentage']=language_sum/total_population*100
+    result_dict['LEP Percentage']="{:.5%}".format(language_sum/total_population)
     result_dict['Language']=language
-    result_dict['total_population']=language_sum
+    result_dict['Total LEP population']=language_sum
     # 5 biggest communities that speak this language!!!!
     query={'LEP Population (Estimate)':{"$gt":0},'Language':language}
     sort=[('LEP Population (Estimate)',-1)]
-    fields ={"Borough":1,"LEP Population (Estimate)":1,"Community District Name":1,"Language":1}
+    fields ={"Borough":1,"LEP Population (Estimate)":1,"Community District Name":1}
     limit=5
     demo_list= []
     demo_data=populations.find(query,fields).sort(sort).limit(limit)
     for each in demo_data:
         each.pop("_id")
         demo_list.append(each)
-    result_dict["biggest_communities"]=demo_list
+    result_dict[f"Biggest Communities"]=demo_list
     return (result_dict)
         
 #Run app code

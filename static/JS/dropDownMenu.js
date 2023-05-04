@@ -33,24 +33,4 @@ function optionChanged(subjectLanguage) {
     }
 }
 
-function demoBox(subjectLanguage) {
-    console.log(`demobox for ${subjectLanguage}`);
-    let panel = d3.select('.panel-body');
-    if (subjectLanguage==="All"){
-        d3.json("http://localhost:5000/demographic_all").then((data) => {
-            panel.html('');
-            console.log(data);
-            panel.append('h6').text(`we're doing a demobox for: ${subjectLanguage} ${Object.keys(data)[0]}`);
-        });    
-    }
-    else {
-        d3.json(`http://localhost:5000/demographic/${subjectLanguage}`).then((data) => {
-            panel.html('');
-            console.log(data);
-            panel.append('h6').text(`we're doing a demobox for: ${subjectLanguage} ${Object.keys(data[0])[0]}`);
-        });  
-    }
-    
-}
-
 setUp();

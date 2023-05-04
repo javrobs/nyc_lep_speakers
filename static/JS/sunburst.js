@@ -123,18 +123,17 @@ function updateSunburst([ids,labels,parents,values]) {
       parents: parents,
       values:values,
       textposition: 'inside',
-      insidetextorientation: 'radial'
+      insidetextorientation: 'radial',
+      textfont:{size:12,color:"black"}
     }
   ];
 
   // TO DO: Play with colors in layout
   var layout = {
-    margin: {l: 0, r: 0, b: 0, t:0},
-    // sunburstcolorway:[
-    // "#636efa","#EF553B","#00cc96","#ab63fa","#19d3f3",
-    // "#e763fa", "#FECB52","#FFA15A","#FF6692","#B6E880"
-    // ],
-    // extendsunburstcolorway: true
+    margin: {l:1, r: 1, b: 10, t:10},
+    paper_bgcolor: "rgba(255, 255, 255, 0)",
+    height:600,
+    sunburstcolorway:["#D67616","#62AA9F","#176F6A","#AD3A00","#7A2F1E"]
   };
 
   Plotly.newPlot('sunburst', trace, layout);
