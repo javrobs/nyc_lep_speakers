@@ -27,7 +27,7 @@ def home():
             <a href='http://127.0.0.1:5000/populations_all'>/populations_all</a><br>\
             <a href='http://127.0.0.1:5000/populations/Spanish'>/populations/language </a> (Ex. Spanish)<br>\
             <a href='http://127.0.0.1:5000/demographic_all'>/demographic_all</a><br>\
-            <a href='http://127.0.0.1:5000/demographic/Spanish'>/populations/language </a> (Ex. Spanish)<br>"
+            <a href='http://127.0.0.1:5000/demographic/Spanish'>/demographic/language </a> (Ex. Spanish)<br>"
             
 
 @app.route("/communities")

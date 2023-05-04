@@ -3,8 +3,8 @@ const URL = "http://localhost:5000/populations_all";
 
 function setUp(){
     d3.json(URL).then((data)=>{
-        console.log("here is the JSON data!!!")
-        console.log(data);
+        // console.log("here is the JSON data!!!")
+        // console.log(data);
         // fetch languages for dropdown menu
         let languages=[]
         data.forEach(row =>  {
@@ -13,7 +13,7 @@ function setUp(){
             }
         });
         languages.sort()
-        console.log(languages);
+        // console.log(languages);
         d3.select('select').append('option').attr("value", "All").text("All");
         languages.forEach(row => {
             d3.select('select').append('option').attr("value" , row).text(row);
@@ -36,10 +36,21 @@ function optionChanged(subjectLanguage) {
 function demoBox(subjectLanguage) {
     console.log(`demobox for ${subjectLanguage}`);
     let panel = d3.select('.panel-body');
-    d3.json(URL).then((data) => {
-        panel.html('');
-        panel.append('h6').text(`we're doing a demobox for: ${subjectLanguage}`)
-});
+    if (subjectLanguage==="All"){
+        d3.json("http://localhost:5000/demographic_all").then((data) => {
+            panel.html('');
+            console.log(data);
+            panel.append('h6').text(`we're doing a demobox for: ${subjectLanguage} ${Object.keys(data)[0]}`);
+        });    
+    }
+    else {
+        d3.json(`http://localhost:5000/demographic/${subjectLanguage}`).then((data) => {
+            panel.html('');
+            console.log(data);
+            panel.append('h6').text(`we're doing a demobox for: ${subjectLanguage} ${Object.keys(data[0])[0]}`);
+        });  
+    }
+    
 }
 
 setUp();

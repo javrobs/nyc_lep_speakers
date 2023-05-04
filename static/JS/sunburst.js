@@ -65,7 +65,6 @@ function SunburstArrays(data,filtered) {
       } else {
         parents.push("NYC LEP Speakers")
       }
-
       // Initialize value of borough by pushing a 0
       values.push(0);
     };
@@ -109,8 +108,6 @@ function SunburstArrays(data,filtered) {
     //Add up values for community district sum by searching index in IDS with Community District Code, row by row.
     values[ids.indexOf(row["Borough Community District Code"])]+=row["LEP Population (Estimate)"];
   })
-
-  console.log(ids,labels,parents,values);
   return [ids,labels,parents,values];
 }
 
