@@ -33,23 +33,4 @@ function optionChanged(subjectLanguage) {
     }
 }
 
-function demoBox(subjectLanguage) {
-    console.log(`demobox for ${subjectLanguage}`);
-    let panel = d3.select('.panel-body');
-    if (subjectLanguage==="All"){
-        var URL="http://localhost:5000/demographic_all";
-    }
-    else {
-        var URL=`http://localhost:5000/demographic/${subjectLanguage}`;
-    }
-    d3.json(URL).then((data) => {
-            panel.html('');
-            console.log(data);
-            panel.append('h6').text(`we're doing a demobox for: ${subjectLanguage}`);
-            data.forEach((row)=>{
-                panel.append('h6').text(Object.keys(row));
-            });
-        });   
-}
-
 setUp();

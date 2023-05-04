@@ -6,7 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>NYC Limited English Proficiency Speakers</title>
+  <link rel="stylesheet" type="text/css" href="static/css/styles.css" /> 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  
 </head>
 
 <body>
@@ -21,7 +23,7 @@
     <div class="row">
       <div class="col-md-4">
         <div class="well">
-          <h5>Language:</h5>
+          <h5 class="demo_header">Language:</h5>
           <select id="selDataset" onchange="optionChanged(this.value)"></select>
         </div>
         <div class="panel panel-primary">
@@ -32,7 +34,7 @@
         </div>
       </div>
       <div class="col-md-8">
-        <div id="sunburst"></div>
+        <div id="sunburst" class="panel"></div>
       </div>
     </div>
     <div class="row">
@@ -45,6 +47,7 @@
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="static/js/map.js"></script>
+  <script src="static/js/demoBox.js"></script>
   <script src="static/js/sunburst.js"></script>
   <script src="static/js/dropDownMenu.js"></script>
 
