@@ -111,15 +111,7 @@ d3.json(link2).then((nyc_polygons) => {
         style: (feature) => makeStyle(feature),
         onEachFeature: (feature, layer) => {
 
-            let found = find_Code(feature.properties.neighborhood);
-
-            if (found === -1) { }
-
-            else {
-
-                console.log("found");
-                console.log(find_Code(feature.properties.neighborhood));
-                layer.bindPopup(`<h1>${feature.properties.neighborhood}</h1> <hr> <h2>${found}</h2>`);
+                layer.bindPopup(`<h1>${feature.properties.boro_cd}</h1> <hr> <h2>${feature.properties.population}</h2>`);
                 layer.on({
                     mouseover: (event) => {
                         layer = event.target;
@@ -136,7 +128,6 @@ d3.json(link2).then((nyc_polygons) => {
                         });
                     }
                 })
-            } // else
         }
     }).addTo(myMap);
 
