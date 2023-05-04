@@ -3,6 +3,7 @@ from flask import Flask,jsonify
 from pymongo import MongoClient
 from flask_cors import CORS
 import pandas as pd
+from flask_cors import cross_origin
 
 # Create an instance of MongoClient
 client=MongoClient(port=27017)
@@ -17,7 +18,7 @@ communities=languages.communities
 # Define app to run api using Flask
 app = Flask(__name__)
 
-CORS(app, origins=["http://localhost:8000"])
+CORS(app)
 
 @app.route("/")
 def home():
@@ -64,15 +65,53 @@ def demographics_all_api():
     population_json=populations.find(query)
     total_population_df = pd.DataFrame(population_json)
     total_population=sum(total_population_df['LEP Population (Estimate)'])
-    return ({'result':total_population})
+    response_dict = {}
+    response_dict["language"]="ALL"
+    response_dict["total_lep_population"] = total_population
+    
+# information for BIGGEST  5 LEP communities
+    query={'LEP Population (Estimate)':{"$gt":0}}
+    sort=[('LEP Population (Estimate)',-1)]
+    fields ={"Borough":1,"LEP Population (Estimate)":1,"Community District Name":1,"Language":1}
+    limit=5
+    demo_list= []
+    demo_data=populations.find(query,fields).sort(sort).limit(limit)
+    for each in demo_data:
+        each.pop("_id")
+        demo_list.append(each)
+    response_dict["biggest_communities"]=demo_list
+    return jsonify(response_dict)
+
+
+    
 
 @app.route("/demographic/<language>")
 def demographic_api(language):
+    query={'LEP Population (Estimate)':{"$gt":0}}
+    population_json=populations.find(query)
+    total_population_df = pd.DataFrame(population_json)
+    total_population=sum(total_population_df['LEP Population (Estimate)'])
+
     match_query= {'$match':{'Language': language}}
-    group_query = {'$group':{'_id':'$Language','Lep Population':{'$sum':'$LEP Population (Estimate)'}}}
+    group_query = {'$group':{'_id':'$Language','sum':{'$sum':'$LEP Population (Estimate)'}}}
     pipeline=[match_query,group_query]
-    results= list(populations.aggregate(pipeline))
-    return jsonify(results)
+    language_sum= list(populations.aggregate(pipeline))[0]['sum']
+    result_dict={}
+    result_dict['LEP_percentage']=language_sum/total_population*100
+    result_dict['Language']=language
+    result_dict['total_population']=language_sum
+    # 5 biggest communities that speak this language!!!!
+    query={'LEP Population (Estimate)':{"$gt":0},'Language':language}
+    sort=[('LEP Population (Estimate)',-1)]
+    fields ={"Borough":1,"LEP Population (Estimate)":1,"Community District Name":1,"Language":1}
+    limit=5
+    demo_list= []
+    demo_data=populations.find(query,fields).sort(sort).limit(limit)
+    for each in demo_data:
+        each.pop("_id")
+        demo_list.append(each)
+    result_dict["biggest_communities"]=demo_list
+    return (result_dict)
         
 #Run app code
 if __name__=="__main__":
