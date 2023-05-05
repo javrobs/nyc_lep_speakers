@@ -54,7 +54,7 @@ function updateMap(language,initialize) {
         onEachFeature: function(feature, layer) {
           layer.bindPopup(`<h3 class="tight">${feature.properties.name}<br> (${feature.properties.borough})</h3> 
                             <br>
-                            <h4 class="tight">Population: ${feature.properties.population}</h4>`);
+                            <h4 class="tight">LEP Population: ${feature.properties.population}</h4>`);
         }
       }).addTo(myMap);
   
