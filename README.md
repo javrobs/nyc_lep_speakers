@@ -1,7 +1,7 @@
 <h1 class="p1">Languages of the Limited English Proficient (LEP) Speakers by Community District in NYC</h1>
 <h2>Introduction</h2>
 <p>These interactive visualizations help us understand the total quantity of speakers with a limited English proficiency and the concentration of each of the languages they speak in each of NYC's community districts.</p>
-<h1>Sketch and Inspiration</h1>
+<h2>Sketch and Inspiration</h2>
 <p>The desired result is approximately as follows:</p>
 <p data-sourcepos="9:1-10:26" dir="auto"><a target="_blank" rel="noopener noreferrer" href="https://github.com/javrobs/nyc_lep_speakers/blob/main/images/draft.png"><img src="https://github.com/javrobs/nyc_lep_speakers/raw/main/images/draft.png" alt="draft" /></a></p>
 <h2>Sources</h2>
