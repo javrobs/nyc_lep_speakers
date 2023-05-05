@@ -4,6 +4,7 @@ from pymongo import MongoClient
 from flask_cors import CORS
 import pandas as pd
 from flask_cors import cross_origin
+from flask import render_template
 
 # Create an instance of MongoClient
 client=MongoClient(port=27017)
@@ -141,6 +142,11 @@ def demographic_api(language):
         demo_list.append(each)
     result_dict[f"Biggest Communities"]=demo_list
     return (result_dict)
+@app.route("/endpoint")
+def endpoint():
+    return (render_template('index.html'))
+
+
         
 #Run app code
 if __name__=="__main__":
