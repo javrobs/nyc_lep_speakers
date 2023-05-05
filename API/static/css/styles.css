@@ -6,6 +6,10 @@
     color: #176F6A;
     margin:0;
 }
+.tight{
+    margin:0;
+    padding:0;
+}
 
 .title{
     max-height: 230px;
@@ -31,10 +35,10 @@ body{
     border-color:#833220;
 }
 
-/* 
+
 #panel-demo{
     height:485px;
-} */
+}
 
 #selDataset{
     width:100%
@@ -86,7 +90,7 @@ body {
     float: right;
   }
   
-h1 {
+h3 {
     text-align: center;
   }  
 

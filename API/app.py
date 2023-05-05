@@ -22,8 +22,9 @@ CORS(app)
 
 @app.route("/")
 def home():
-    return "This site is for developers only<br>\
-            These are the possible routes:<br>\
+    return "To website:<br>\
+            <a href='http://127.0.0.1:5000/endpoint'>New York City LEP Speakers</a><br><br>\
+            These are the possible routes for our API:<br>\
             <a href='http://127.0.0.1:5000/communities_all'>/communities_all</a><br>\
             <a href='http://127.0.0.1:5000/communities/Spanish'>/communities/Spanish</a> (Ex. Spanish)<br>\
             <a href='http://127.0.0.1:5000/populations_all'>/populations_all</a><br>\
@@ -32,20 +33,41 @@ def home():
             <a href='http://127.0.0.1:5000/demographic/Spanish'>/demographic/language </a> (Ex. Spanish)<br>"
             
 
+# @app.route("/communities_all")
+# def communities_api():
+#     com_dict = communities.find_one({})
+#     com_dict.pop("_id")
+#     group = [{"$group":{"_id":"$Borough Community District Code", "sum":{"$sum":"$LEP Population (Estimate)"}}}]
+#     pop_dict= list(populations.aggregate(group))
+#     merged = {}
+#     for each in pop_dict:
+#         merged[each ["_id"]] = each ["sum"]
+#     for each in com_dict["features"]:
+#         try: 
+#             each["properties"]["population"]=merged[each["properties"]["boro_cd"]]
+#         except: 
+#             each["properties"]["population"]=0
+#     return jsonify(com_dict)
+
 @app.route("/communities_all")
 def communities_api():
     com_dict = communities.find_one({})
     com_dict.pop("_id")
-    group = [{"$group":{"_id":"$Borough Community District Code", "sum":{"$sum":"$LEP Population (Estimate)"}}}]
-    pop_dict= list(populations.aggregate(group))
-    merged = {}
+    pop_dict= list(populations.find())
     for each in pop_dict:
-        merged[each ["_id"]] = each ["sum"]
-    for each in com_dict["features"]:
+        each.pop("_id")
+    df=pd.DataFrame(pop_dict).groupby(["Borough Community District Code","Borough","Community District Name"]).sum()[["LEP Population (Estimate)"]].reset_index(drop=False).set_index("Borough Community District Code")
+    merged=df.to_dict(orient="dict")
+    for i,each in enumerate(com_dict["features"]):
         try: 
-            each["properties"]["population"]=merged[each["properties"]["boro_cd"]]
-        except: 
+            each["properties"]["population"]=merged["LEP Population (Estimate)"][each["properties"]["boro_cd"]]
+            each["properties"]["name"]=merged["Community District Name"][each["properties"]["boro_cd"]]
+            each["properties"]["borough"]=merged["Borough"][each["properties"]["boro_cd"]]
+        except:
             each["properties"]["population"]=0
+            each["properties"]["name"]=0
+            each["properties"]["borough"]=0
+    com_dict["features"]=list(filter(lambda line: line["properties"]["name"]!=0,com_dict["features"]))
     return jsonify(com_dict)
 
 @app.route("/communities/<language>")
@@ -53,16 +75,21 @@ def communities_language_api(language):
     com_dict = communities.find_one({})
     com_dict.pop("_id")
     query = {"Language" : language}
-    exclude = {"Language": 1, "LEP Population (Estimate)":1, "Borough Community District Code": 1}
-    pop_dict= list(populations.find(query, exclude))
+    include = {"Language": 1, "LEP Population (Estimate)":1, "Borough Community District Code": 1, "Community District Name":1,"Borough":1}
+    pop_dict= list(populations.find(query, include))
     merged = {}
     for each in pop_dict:
-        merged[each ["Borough Community District Code"]] = each ["LEP Population (Estimate)"]
-    for each in com_dict["features"]:
+        merged[each ["Borough Community District Code"]] = [each ["LEP Population (Estimate)"],each["Community District Name"],each["Borough"]]
+    for i,each in enumerate(com_dict["features"]):
         try: 
-            each["properties"]["population"]=merged[each["properties"]["boro_cd"]]
-        except: 
+            each["properties"]["population"]=merged[each["properties"]["boro_cd"]][0]
+            each["properties"]["name"]=merged[each["properties"]["boro_cd"]][1]
+            each["properties"]["borough"]=merged[each["properties"]["boro_cd"]][2]
+        except:
             each["properties"]["population"]=0
+            each["properties"]["name"]=0
+            each["properties"]["borough"]=0
+    com_dict["features"]=list(filter(lambda line: line["properties"]["name"]!=0,com_dict["features"]))
     return jsonify(com_dict)
 
 
@@ -143,8 +170,6 @@ def demographic_api(language):
 @app.route("/endpoint")
 def endpoint():
     return (render_template('index.html'))
-
-
         
 #Run app code
 if __name__=="__main__":

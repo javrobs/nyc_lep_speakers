@@ -10,15 +10,13 @@ let myMap = L.map("map", {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(myMap);
   
-  // Load the GeoJSON data.
- 
-  
-  let geojson;
-  
-  // To do:
-  
+let geojson
+   
   // Get the data with d3.
-function updateMap(language) {
+function updateMap(language,initialize) {
+  if (!initialize){
+    myMap.removeLayer(geojson)
+  }
   let geoData;
   if (language==="All"){
     geoData = "http://127.0.0.1:5000/communities_all";
@@ -54,7 +52,9 @@ function updateMap(language) {
   
         // Binding a popup to each layer
         onEachFeature: function(feature, layer) {
-          layer.bindPopup(`<h1>${feature.properties.boro_cd}</h1> <hr> <h2>${feature.properties.population}</h2>`);
+          layer.bindPopup(`<h3 class="tight">${feature.properties.name}<br> (${feature.properties.borough})</h3> 
+                            <br>
+                            <h4 class="tight">Population: ${feature.properties.population}</h4>`);
         }
       }).addTo(myMap);
   
@@ -69,7 +69,7 @@ function updateMap(language) {
         let labels = [];
     
         // Add the minimum and maximum.
-        let legendInfo = "<h1>leyenda test<br />(leyenda test2)</h1>" +
+        let legendInfo = "<h3>Population in<br> Community District</h3>" +
           "<div class=\"labels\">" +
             "<div class=\"min\">" + limits[0] + "</div>" +
             "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
