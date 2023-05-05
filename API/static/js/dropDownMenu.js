@@ -25,12 +25,13 @@ function setUp(){
 function optionChanged(subjectLanguage,initialize) {
     console.log(subjectLanguage);
     demoBox(subjectLanguage);
+    horizontalBar(subjectLanguage);
     updateMap(subjectLanguage,initialize);
     if (subjectLanguage==="All"){
         allLanguages();
     }
     else {
-    sunburstFilter(subjectLanguage);
+        sunburstFilter(subjectLanguage);
     }
 }
 
