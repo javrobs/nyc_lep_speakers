@@ -7,7 +7,7 @@
 <h2>Sources</h2>
 <p>The data was obtained from 2 different sources, both of them obtained from NYC's open data portal.&nbsp;</p>
 <ul>
-<li>Source 1: Contains information about the total amount of speakers of a number of languages in each of NYC's community districts. JSON URL: <a href="contains%20information about the languages: https://data.cityofnewyork.us/resource/ajin-gkbp.json">https://data.cityofnewyork.us/resource/ajin-gkbp.json</a></li>
+<li>Source 1: Contains information about the total amount of speakers of a number of languages in each of NYC's community districts. JSON URL: <a href="https://data.cityofnewyork.us/resource/ajin-gkbp.json">https://data.cityofnewyork.us/resource/ajin-gkbp.json</a></li>
 <li>Source 2: Contains the coordinates for the polygons determining each of NYC's community districts. JSON URL: <a href="https://data.cityofnewyork.us/resource/jp9i-3b7y.json">https://data.cityofnewyork.us/resource/jp9i-3b7y.json</a></li>
 </ul>
 <h2>Challenges</h2>
@@ -39,5 +39,14 @@
 <li>Stage 3: We built the different JavaScript files containing the logic for the dropdown menu, the sunburst chart and the choropleth map.</li>
 <li>Stage 4: We built the HTML and CSS files, which would enable us to put all of the elements of the dashboard together and display them.</li>
 </ul>
+<h2>Final Result</h2>
+<p>The screenshot below shows a preview of the final result.</p>
+<p><img src="https://github.com/javrobs/nyc_lep_speakers/blob/main/images/dashboard.png?raw=true" alt="dashboard.png" /></p>
 <h2>Contributors</h2>
-<p>This dashboard was created by the following authors: Javier Robles Samar (<a href="https://www.linkedin.com/in/javier-robles-samar/">LinkedIn</a>), Mar&iacute;a Jos&eacute; Cavazos (<a href="https://www.linkedin.com/in/marijose-cavazos-b2a353110/">LinkedIn</a>), Alejandra Espinosa (<a href="https://www.linkedin.com/in/z-ale-espinosa/">LinkedIn</a>), Aldo Antonio Silva Espinoza (<a href="https://www.linkedin.com/in/aldoslv/">LinkedIn</a>).</p>
+<p>This dashboard was created by the following authors:</p>
+<ul>
+<li>Javier Robles Samar (<a href="https://www.linkedin.com/in/javier-robles-samar/">LinkedIn</a>)</li>
+<li>Mar&iacute;a Jos&eacute; Cavazos (<a href="https://www.linkedin.com/in/marijose-cavazos-b2a353110/">LinkedIn</a>)</li>
+<li>Alejandra Espinosa (<a href="https://www.linkedin.com/in/z-ale-espinosa/">LinkedIn</a>)</li>
+<li>Aldo Antonio Silva Espinoza (<a href="https://www.linkedin.com/in/aldoslv/">LinkedIn</a>)</li>
+</ul>
