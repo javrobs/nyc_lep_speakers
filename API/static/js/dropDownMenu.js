@@ -25,6 +25,7 @@ function setUp(){
 function optionChanged(subjectLanguage) {
     console.log(subjectLanguage);
     demoBox(subjectLanguage);
+    updateMap(subjectLanguage);
     if (subjectLanguage==="All"){
         allLanguages();
     }
