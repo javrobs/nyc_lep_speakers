@@ -18,14 +18,14 @@ function setUp(){
         languages.forEach(row => {
             d3.select('select').append('option').attr("value" , row).text(row);
         });
-        optionChanged("All");
+        optionChanged("All",true);
     });
 }
 
-function optionChanged(subjectLanguage) {
+function optionChanged(subjectLanguage,initialize) {
     console.log(subjectLanguage);
     demoBox(subjectLanguage);
-    updateMap(subjectLanguage);
+    updateMap(subjectLanguage,initialize);
     if (subjectLanguage==="All"){
         allLanguages();
     }
