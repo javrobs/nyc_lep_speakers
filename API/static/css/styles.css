@@ -1,7 +1,13 @@
 .demo_header {
     font-weight: bold;
 }
-
+.no-r-padding{
+    padding-right:0;
+}
+.no-lr-padding{
+    padding-right:0;
+    padding-left:0;
+}
 .demo_info {
     color: #176F6A;
     margin:0;
