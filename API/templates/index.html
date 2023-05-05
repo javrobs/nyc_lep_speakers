@@ -6,50 +6,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>NYC Limited English Proficiency Speakers</title>
-  <link rel="stylesheet" type="text/css" href="/static/css/styles.css" /> 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  
+  <link rel="stylesheet" type="text/css" href="/static/css/styles.css" /> 
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+    integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+    crossorigin=""/>
 </head>
 
 <body>
 
   <div class="container">
     <div class="row">
-      <div class="col-md-12 jumbotron text-center">
-        <h1>NYC Limited English Proficiency Speakers</h1>
+      <div class="col-md-12 jumbotron title panel text-center">
+        <h1>New York City<br>Limited English Proficiency Speakers</h1>
         <p>Use the interactive charts below to explore the dataset</p>
       </div>
     </div>
     <div class="row">
       <div class="col-md-4">
-        <div class="well">
-          <h5 class="demo_header">Language:</h5>
-          <select id="selDataset" onchange="optionChanged(this.value)"></select>
-        </div>
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">Demographic Information</h3>
+        <div class="row">
+          <div class="well panel">
+            <h5 class="demo_header">Language:</h5>
+            <select id="selDataset" onchange="optionChanged(this.value)"></select>
           </div>
-          <div id="sample-metadata" class="panel-body"></div>
+        </div>
+        <div class="row">
+          <div class="panel panel-primary" id="panel-demo">
+            <div class="panel-heading" id="demo-panel-title">
+              <h3 class="panel-title">Demographic Information</h3>
+            </div>
+            <div id="sample-metadata" class="panel-body"></div>
+          </div>
         </div>
       </div>
-      <div class="col-md-8">
+      <div class="col-md-8 ">
         <div id="sunburst" class="panel"></div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
-        <div id="map"></div>
+        <div id="map" class="panel"></div>
       </div>
     </div>
   </div>
-
+  <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+    integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
+    crossorigin=""></script>
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="/static/js/map.js"></script>
   <script src="/static/js/demoBox.js"></script>
   <script src="/static/js/sunburst.js"></script>
   <script src="/static/js/dropDownMenu.js"></script>
+  
+  <!-- leaflet-choropleth JavaScript -->
+  <script type="text/javascript" src="/static/js/choropleth.js"></script>
+
 
   
 </body>

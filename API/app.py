@@ -3,7 +3,6 @@ from flask import Flask,jsonify
 from pymongo import MongoClient
 from flask_cors import CORS
 import pandas as pd
-from flask_cors import cross_origin
 from flask import render_template
 
 # Create an instance of MongoClient
@@ -113,8 +112,6 @@ def demographics_all_api():
     return jsonify(response_dict)
 
 
-    
-
 @app.route("/demographic/<language>")
 def demographic_api(language):
     query={'LEP Population (Estimate)':{"$gt":0}}
@@ -142,6 +139,7 @@ def demographic_api(language):
         demo_list.append(each)
     result_dict[f"Biggest Communities"]=demo_list
     return (result_dict)
+
 @app.route("/endpoint")
 def endpoint():
     return (render_template('index.html'))

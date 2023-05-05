@@ -7,24 +7,88 @@
     margin:0;
 }
 
+.title{
+    max-height: 230px;
+    padding: 0px;
+}
+
+.panel{
+    background-color:rgba(234,248,249,0.9);
+    border-color:#833220;
+}
+
 body{
     background: url("/static/images/nyc_bg.jpg");
     background-size: cover;
-    background-color: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(5px);
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-#max{
-    height:1000px;
+.panel-primary{
+    border-color:#833220;
+}
+.panel > .panel-heading {
+    background-color: #833220;
+    border-color:#833220;
 }
 
-#same-height{
-    height:800px;
-}
+/* 
+#panel-demo{
+    height:485px;
+} */
 
 #selDataset{
     width:100%
 }
+
+body {
+    padding: 0;
+    margin: 0;
+  }
+  
+#map {
+    height: 600px;
+}
+  
+.leaflet-popup-content {
+    text-align: center;
+}
+  
+  /* CSS from the leaflet-choropleth documentation */
+.legend {
+    color: #555;
+    padding: 6px 8px;
+    font: 12px Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;  
+}
+
+.legend ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    clear: both;
+  }
+
+.legend li {
+    display: inline-block;
+    width: 30px;
+    height: 22px;
+  }
+
+.legend .min {
+    float: left;
+    padding-bottom: 5px;
+  }
+.legend .max {
+    float: right;
+  }
+  
+h1 {
+    text-align: center;
+  }  
 
 
 /* Foto de <a href="https://unsplash.com/@jonathanroger?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Jonathan Roger</a> en <a href="https://unsplash.com/es/fotos/LY1eyQMFeyo?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
