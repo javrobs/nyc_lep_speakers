@@ -111,7 +111,10 @@ function SunburstArrays(data,filtered) {
   return [ids,labels,parents,values];
 }
 
+
+
 function updateSunburst([ids,labels,parents,values]) {
+  // console.log(labels)
   var trace = [
     {
       type: "sunburst",
@@ -119,8 +122,9 @@ function updateSunburst([ids,labels,parents,values]) {
       hoverinfo:"label+text+value+percent parent+percent root",
       branchvalues: "total",
       ids: ids,
-      labels: labels,
+      labels: labels.map(line=>{return line.replace(", ", "<br>")}),
       parents: parents,
+      marker:{line:{color:"white",width:0.2}},
       values:values,
       textposition: 'inside',
       insidetextorientation: 'radial',
@@ -130,11 +134,11 @@ function updateSunburst([ids,labels,parents,values]) {
 
   // TO DO: Play with colors in layout
   var layout = {
-    margin: {l:1, r: 1, b: 10, t:10},
+    margin: {l:30,r:30,t:30,b:30},
     paper_bgcolor: "rgba(255, 255, 255, 0)",
-    height:600,
+    autosize:true,
     sunburstcolorway:["#D67616","#62AA9F","#176F6A","#AD3A00","#7A2F1E"]
   };
 
-  Plotly.newPlot('sunburst', trace, layout);
+  Plotly.newPlot('content', trace, layout);
 }

@@ -18,7 +18,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12 jumbotron title panel text-center">
-        <h1>New York City<br>Limited English Proficiency Speakers 10:29</h1>
+        <h1>New York City<br>Limited English Proficiency Speakers</h1>
         <p>Use the interactive charts below to explore the dataset</p>
       </div>
     </div>
@@ -27,7 +27,10 @@
         <div class="row">
           <div class="well panel">
             <h5 class="demo_header">Language:</h5>
-            <select id="selDataset" onchange="optionChanged(this.value,false)"></select>
+            <select id="selDataset" onchange="optionChanged(this.value,false,false)"></select>
+            <h5 class="demo_header">Display:</h5>
+            <input type="radio" id="sunburst_input" name="content" value="sunburst" checked="checked" onclick="contentSelect()"><label for="sunburst_input">Sunburst</label>
+            <input type="radio" id="map_input" name="content" value="map" onclick="contentSelect()"><label for="map_input">Map</label>
           </div>
         </div>
         <div class="row">
@@ -42,15 +45,12 @@
           </div>
         </div>
       </div>
-      <div class="col-md-7 no-r-padding">
-        <div id="sunburst" class="panel"></div>
+      <div class="col-md-7 right-side">
+        <div class="panel" id="content"></div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12 no-lr-padding">
-        <div id="map" class="panel"></div>
-      </div>
-    </div>
+  </div>
+  <div  id="photo-credit">Photo from: <a href="https://unsplash.com/es/fotos/LGtJ44QWo_c?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a> | By <a href="https://unsplash.com/pt-br/@kaip?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Kai Pilger</a> 
   </div>
   <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
     integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
@@ -61,12 +61,11 @@
   <script src="/static/js/demoBox.js"></script>
   <script src="/static/js/sunburst.js"></script>
   <script src="/static/js/dropDownMenu.js"></script>
+  <script src="/static/js/barChart.js"></script>
   
   <!-- leaflet-choropleth JavaScript -->
   <script type="text/javascript" src="/static/js/choropleth.js"></script>
 
-
-  
 </body>
 
 </html>

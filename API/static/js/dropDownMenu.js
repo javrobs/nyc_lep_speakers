@@ -18,21 +18,38 @@ function setUp(){
         languages.forEach(row => {
             d3.select('select').append('option').attr("value" , row).text(row);
         });
-        optionChanged("All",true);
+        optionChanged("All",true,false);
     });
 }
 
-function optionChanged(subjectLanguage,initialize) {
-    console.log(subjectLanguage);
+function optionChanged(subjectLanguage,initialize,contentChanged) {
+    console.log("optionChanged");
     demoBox(subjectLanguage);
     horizontalBar(subjectLanguage);
-    updateMap(subjectLanguage,initialize);
-    if (subjectLanguage==="All"){
-        allLanguages();
+    content=d3.selectAll('input:checked').property("value");
+    if (content=="map"){
+        console.log("content is set to map");
+        updateMap(subjectLanguage,initialize);
     }
-    else {
-        sunburstFilter(subjectLanguage);
+    if (content=="sunburst"){
+        if(contentChanged){
+        myMap.remove()
+        }
+        if (subjectLanguage==="All"){
+                allLanguages();
+            }
+            else {
+                sunburstFilter(subjectLanguage);
+            }
     }
+    
+}
+
+function contentSelect(){
+    console.log("contentSelect function was initialized")
+    language=d3.select('select').property("value");
+    d3.select('#content').html("").attr("class","panel");
+    optionChanged(language,true,true)
 }
 
 setUp();
