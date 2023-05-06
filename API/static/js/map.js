@@ -1,20 +1,20 @@
-console.log("Map connected")
 // Creating the map object
-let myMap = L.map("map", {
-    center: [40.7128, -74.0059],
-    zoom: 10
-  });
-  
-  // Adding the tile layer
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(myMap);
-  
-let geojson
-   
-  // Get the data with d3.
+var geojson;
+var myMap
 function updateMap(language,initialize) {
-  if (!initialize){
+  if (initialize){
+    console.log("Map connected")
+    myMap = L.map("content", {
+      center: [40.7128, -74.0059],
+      zoom: 10
+    });
+    
+    // Adding the tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(myMap);
+    
+  } else{
     myMap.removeLayer(geojson)
   }
   let geoData;
@@ -35,13 +35,14 @@ function updateMap(language,initialize) {
         valueProperty: "population",
   
         // Set the color scale.
-        scale: ["176f6a","517656","8d7c41","ab7f37","c9822c","e88521","d06111","b83d00","9e3810","833220"],
+        // scale: ["176f6a","517656","8d7c41","ab7f37","c9822c","e88521","d06111","b83d00","9e3810","833220"],
+        scale:["feeed7","f8b550","f17604","cc3600"],
   
         // The number of breaks in the step range
-        steps: 10,
+        steps: 20,
   
         // q for quartile, e for equidistant, k for k-means
-        mode: "q",
+        mode: "e",
   
         style: {
           // Border color
@@ -54,7 +55,7 @@ function updateMap(language,initialize) {
         onEachFeature: function(feature, layer) {
           layer.bindPopup(`<h3 class="tight">${feature.properties.name}<br> (${feature.properties.borough})</h3> 
                             <br>
-                            <h4 class="tight">LEP Population: ${feature.properties.population}</h4>`);
+                            <h4 class="tight">LEP Population: ${feature.properties.population.toLocaleString("en-US")}</h4>`);
         }
       }).addTo(myMap);
   
@@ -71,8 +72,8 @@ function updateMap(language,initialize) {
         // Add the minimum and maximum.
         let legendInfo = "<h3>Population in<br> Community District</h3>" +
           "<div class=\"labels\">" +
-            "<div class=\"min\">" + limits[0] + "</div>" +
-            "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
+            "<div class=\"min\">" + limits[0].toLocaleString("en-US") + "</div>" +
+            "<div class=\"max\">" + limits[limits.length - 1].toLocaleString("en-US") + "</div>" +
           "</div>";
     
         div.innerHTML = legendInfo;

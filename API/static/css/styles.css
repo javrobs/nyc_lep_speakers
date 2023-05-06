@@ -1,20 +1,20 @@
 .demo_header {
     font-weight: bold;
 }
-.no-r-padding{
-    padding-right:0;
-}
-.no-lr-padding{
-    padding-right:0;
-    padding-left:0;
-}
+
 .demo_info {
     color: #176F6A;
     margin:0;
 }
+
 .tight{
     margin:0;
     padding:0;
+}
+
+input[type="radio"]{
+    margin-top:5px;
+    margin-left:5px;
 }
 
 .title{
@@ -23,7 +23,7 @@
 }
 
 .panel{
-    background-color:rgba(234,248,249,0.9);
+    background-color:rgba(234,248,249,0.85);
     border-color:#833220;
 }
 
@@ -33,30 +33,37 @@ body{
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.panel-primary{
-    border-color:#833220;
-}
 .panel > .panel-heading {
     background-color: #833220;
     border-color:#833220;
 }
 
-
 #panel-demo{
     height:485px;
+    border-color:#833220;
 }
 
 #selDataset{
     width:100%
 }
 
-body {
-    padding: 0;
-    margin: 0;
-  }
-  
-#map {
-    height: 600px;
+.right-side{
+    padding-right:0;
+    height:666.78px;
+}
+#photo-credit{
+    background-color:rgba(234,248,249,0.65);
+    position:fixed;
+    font-size:small;
+    font-weight:bold;
+    padding:0 5px;
+    bottom:0;
+    right:0;
+}
+
+#content {
+    height: 100%;
+    padding: 0px;
 }
   
 .leaflet-popup-content {
@@ -84,7 +91,7 @@ body {
 
 .legend li {
     display: inline-block;
-    width: 30px;
+    width: 15px;
     height: 22px;
   }
 
