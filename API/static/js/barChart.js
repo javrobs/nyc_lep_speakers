@@ -37,7 +37,7 @@ function horizontalBar(subjectLanguage) {
             {
                 y: communities.reverse(),
                 x: total_population.reverse(),
-                hovertext: hover,
+                hovertext: hover.reverse(),
                 type: "bar",
                 marker:{color:"#176F6A"},
                 // "#D67616","#62AA9F","#176F6A","#AD3A00","#7A2F1E"
