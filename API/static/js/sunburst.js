@@ -4,7 +4,7 @@ function allLanguages(){
   d3.json("http://127.0.0.1:5000/populations_all").then((data)=>{
     
     //Show data length in console. Should match total slices displayed
-    console.log(data.length);
+    // console.log(data.length);
     
     //Call on sunburst update function (false means data isnt filtered by language)
     updateSunburst(SunburstArrays(data,false));

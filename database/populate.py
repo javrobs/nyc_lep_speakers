@@ -28,7 +28,7 @@ populations=languages["populations"]
 
 
 #Open geojson file and save in data variable
-jsonpath = os.path.join('..', 'downloaded_data', 'Community_Districts.geojson')
+jsonpath = os.path.join('downloaded_data', 'Community_Districts.geojson')
 with open(jsonpath) as file:
     data = json.load(file)
 
@@ -39,7 +39,7 @@ print(f"Created communities collection, added {communities.count_documents({})} 
 
 #Open csv file and save in data variable
 
-csvpath = os.path.join('..', 'downloaded_data', 'Population_and_Languages_of_the_Limited_English_Proficient__LEP__Speakers_by_Community_District.csv')
+csvpath = os.path.join('downloaded_data', 'Population_and_Languages_of_the_Limited_English_Proficient__LEP__Speakers_by_Community_District.csv')
 with open(csvpath) as file:
     data = csv.reader(file)
     

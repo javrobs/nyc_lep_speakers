@@ -6,8 +6,7 @@ function horizontalBar(subjectLanguage) {
         var URL=`http://127.0.0.1:5000/demographic/${subjectLanguage}`;
     }
     d3.json(URL).then((data) => {
-        console.log(`here's the data for the bar chart `);
-        console.log(data);
+        // console.log(data);
         // grab data here
         let communities = data["Biggest Communities"].map(row => { 
             let rawName = row["Community District Name"];
@@ -23,7 +22,7 @@ function horizontalBar(subjectLanguage) {
             for(let i=0;i<languages.length;i++){
                 hover.push(`${boroughs[i]}<br>${languages[i]}`);
             };
-            console.log(hover)
+            // console.log(hover)
         }
         else {
             var height=250;
