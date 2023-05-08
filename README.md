@@ -41,7 +41,6 @@
 </ul>
 <h2>Final Result</h2>
 <p>The screenshot below shows a preview of the final result.</p>
-<p><img src="https://github.com/javrobs/nyc_lep_speakers/blob/main/images/dashboard.png?raw=true" alt="dashboard.png" style="display: block; margin-left: auto; margin-right: auto;" /></p>
 <p><img src="https://github.com/javrobs/nyc_lep_speakers/blob/main/images/dashboard_map.png?raw=true" alt="dashboard_map.png" style="display: block; margin-left: auto; margin-right: auto;" /></p>
 <h2>Contributors</h2>
 <p>This dashboard was created by the following authors:</p>
