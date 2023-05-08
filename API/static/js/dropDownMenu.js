@@ -1,9 +1,7 @@
 const URL = "http://127.0.0.1:5000/populations_all";
-// const URL = "https://data.cityofnewyork.us/resource/ajin-gkbp.json";
 
 function setUp(){
     d3.json(URL).then((data)=>{
-        // console.log("here is the JSON data!!!")
         // console.log(data);
         // fetch languages for dropdown menu
         let languages=[]
@@ -23,7 +21,6 @@ function setUp(){
 }
 
 function optionChanged(subjectLanguage,initialize,contentChanged) {
-    console.log("optionChanged");
     demoBox(subjectLanguage);
     horizontalBar(subjectLanguage);
     content=d3.selectAll('input:checked').property("value");
