@@ -15,6 +15,7 @@ function horizontalBar(subjectLanguage) {
             let cleanName = rawName.replace(", ", "<br>");
             return cleanName;
         });
+        // GRAB DATA TO THEN CALCULATE TOTAL LEP POPULATION TO PRESENT IN "ALL" DEMOBOX AND TO MAKE PERCENTAGE CALCULATIONS FOR SPECIFIC LANGUAGES
         let total_population = data["Biggest Communities"].map(row => {return row["LEP Population (Estimate)"]});
         let boroughs = data["Biggest Communities"].map(row => {return row["Borough"]});
         if (subjectLanguage==="All"){
