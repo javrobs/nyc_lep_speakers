@@ -117,6 +117,7 @@ function updateSunburst([ids,labels,parents,values]) {
   // console.log(labels)
   var trace = [
     {
+      // Settings for sunburst content
       type: "sunburst",
       maxdepth: 3,
       hoverinfo:"label+text+value+percent parent+percent root",
@@ -132,12 +133,16 @@ function updateSunburst([ids,labels,parents,values]) {
     }
   ];
 
-  // TO DO: Play with colors in layout
+  // 
   var layout = {
+    // Settings for layout of sunburst
     margin: {l:30,r:30,t:30,b:30},
     paper_bgcolor: "rgba(255, 255, 255, 0)",
     autosize:true,
-    sunburstcolorway:["#D67616","#62AA9F","#176F6A","#AD3A00","#7A2F1E"]
+    // Colors obtained
+    // sunburstcolorway:["#D67616","#62AA9F","#176F6A","#AD3A00","#7A2F1E"]
+    //Corrected color palette for readability
+    sunburstcolorway:["d67616","62aa9f","1c8782","c7531a","a63a24"]
   };
 
   Plotly.newPlot('content', trace, layout);

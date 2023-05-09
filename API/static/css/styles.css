@@ -24,23 +24,28 @@ input[type="radio"]{
 
 .panel{
     background-color:rgba(234,248,249,0.85);
-    border-color:#833220;
+    /* border-color:#833220; */
+    border-color:#a63a24;
 }
 
 body{
     background: url("/static/images/nyc_bg.jpg");
     background-size: cover;
+    backdrop-filter: blur(2px);
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .panel > .panel-heading {
-    background-color: #833220;
-    border-color:#833220;
+    /* background-color: #833220; */
+    /* border-color:#833220; */
+    background-color:#a63a24;
+    border-color:#a63a24;
 }
 
 #panel-demo{
     height:485px;
-    border-color:#833220;
+    /* border-color:#833220; */
+    border-color:#a63a24;
 }
 
 #selDataset{
