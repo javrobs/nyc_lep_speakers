@@ -1,4 +1,5 @@
 function horizontalBar(subjectLanguage) {
+    // getting information from the different APIS depending on the option chosen in dropdown menu
     if (subjectLanguage==="All"){
         var URL="http://127.0.0.1:5000/demographic_all";
     }
@@ -10,12 +11,14 @@ function horizontalBar(subjectLanguage) {
         // grab data here
         let communities = data["Biggest Communities"].map(row => { 
             let rawName = row["Community District Name"];
+            // addred <br> to make the information fit better
             let cleanName = rawName.replace(", ", "<br>");
             return cleanName;
         });
         let total_population = data["Biggest Communities"].map(row => {return row["LEP Population (Estimate)"]});
         let boroughs = data["Biggest Communities"].map(row => {return row["Borough"]});
         if (subjectLanguage==="All"){
+            // added hover information to barchart
             var height=300;
             languages = data["Biggest Communities"].map(row => {return row["Language"]})
             var hover=[]
