@@ -5,24 +5,33 @@
 <p>The desired result is approximately as follows:</p>
 <p data-sourcepos="9:1-10:26" dir="auto"><a target="_blank" rel="noopener noreferrer" href="https://github.com/javrobs/nyc_lep_speakers/blob/main/images/draft.png"><img src="https://github.com/javrobs/nyc_lep_speakers/raw/main/images/draft.png" alt="draft" /></a></p>
 <h2>Sources</h2>
-<p>The data was obtained from 2 different sources, both of them obtained from NYC's open data portal.&nbsp;</p>
+<p>The data was obtained from 2 different sources, gathered from NYC's open data portal.&nbsp;</p>
 <ul>
 <li>Source 1: Contains information about the total amount of speakers of a number of languages in each of NYC's community districts. JSON URL: <a href="https://data.cityofnewyork.us/resource/ajin-gkbp.json">https://data.cityofnewyork.us/resource/ajin-gkbp.json</a></li>
 <li>Source 2: Contains the coordinates for the polygons determining each of NYC's community districts. JSON URL: <a href="https://data.cityofnewyork.us/resource/jp9i-3b7y.json">https://data.cityofnewyork.us/resource/jp9i-3b7y.json</a></li>
 </ul>
 <h2>Challenges</h2>
-<p>Because our data came from 2 different sources we had to cross-reference and unify the sources before proceeding to create the data visualizations. We matched the two different files using the following properties:</p>
+<p>First of all, we stored the two peaces of data in MongoDB; each of them in a different collection (using the sources we mencioned above).
+Before proceeding to create the data visualizations, we had to join the two sources to get just one output from an API call.
+ We matched the two different collections using the following property:</p>
 <ul>
-<li>&ldquo;borough_cd_code&rdquo; for the file that contains information about the speakers.</li>
-<li>&ldquo;boro_cd&rdquo; for the file that contains the coordinates of each community district.</li>
+<li>&ldquo;borough_cd_code&rdquo; for the collection that contains information about the speakers --> populations</li>
+<li>&ldquo;boro_cd&rdquo; for the collection that contains the coordinates of each community district --> communities</li>
 </ul>
-<p>For this, we simply added the properties we needed from the speakers file to the coordinates file using Python. This way, the processing of the data is made from the server, improving the performance of our dashboard.</p>
-<p>As our data is filtered this process is done using 2 different routes for our API:</p>
+<p>For this, we simply put together the properties we needed from the collection named populations (with the number of non english speakers) with  the NY city's coordinates. This task was made using FLASK library in Python. 
+
+By doing that, the processing of the data is made from the server, improving the performance of our dashboard. </p>
+
+<p>As our data is filtered based on different needs, we built 6 different routes of APIs:</p>
 <ul>
-<li>/communities/&lt;Language&gt;: This path filters the speakers file for only the specified language and then completes the merge with our coordinates file.</li>
-<li>/communities_all: This path groups by community district and sums all of the Limited English Proficiency Speakers for each of the community districts and then completes the merge with our coordinates file.</li>
+<li>/communities/&lt;Language&gt;: This API filters the speakers data for the specified language and then completes the merge with our coordinates data.</li>
+<li>/communities_all: This path groups by community district and sums all of the Limited English Proficiency Speakers for each of the community districts and then completes the merge with our coordinates data.</li>
+<li>/demographic_all: This path selects the 5 Biggest Communities of all New York City (based on the number of non english speakers).</li><li>/demographic/&lt;Language&gt; This path selects the data for the 5 Biggest Communities of all New York City, considering only the language indicated as a parameter of the call (based on the number of non english speakers).</li>
+<li>/populations_all: This path selects the district, borough and numbers for the complete New York City.</li>
+<li>/populations/&lt;Language&gt; This path selects the district, borough and numbers, considering only the language indicated as a parameter of the call.</li>
+
 </ul>
-<p>Each of the paths is activated depending on the filter selected by the user.</p>
+<p>Each of the calls of the different API are made depending on the filter selected by the user.</p>
 <h2>Building the dashboard</h2>
 <p>Once the data processing was completed, we then proceeded to build the dashboard. Our dashboard is comprised by 4 different parts:</p>
 <ol>
@@ -35,8 +44,8 @@
 <p>We divided the creation process in different stages:</p>
 <ul>
 <li>Stage 1: We gathered the data. An initial obstacle was that the data about the speakers was missing the geographic coordinates for each of the community districts, which were necessary for the creation of the map.</li>
-<li>Stage 2: We processed the data and built an API for the map and sunburst chart to call using Python and Flask.</li>
-<li>Stage 3: We built the different JavaScript files containing the logic for the dropdown menu, the sunburst chart and the choropleth map.</li>
+<li>Stage 2: We processed the data and built 6 different API's to offer the output sources for the charts and map using Python and Flask.</li>
+<li>Stage 3: We built the different JavaScript files containing the logic to implement all the functionality; the sunburst chart, the bar one and the choropleth map.</li>
 <li>Stage 4: We built the HTML and CSS files, which would enable us to put all of the elements of the dashboard together and display them.</li>
 </ul>
 <h2>Final Result</h2>
