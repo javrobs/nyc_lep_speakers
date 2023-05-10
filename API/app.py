@@ -142,19 +142,26 @@ def demographics_all_api():
     # Filter out 0 in LEP Population (To not show languages  with 0 speakers every single time)
     query={'LEP Population (Estimate)':{"$gt":0}}
     population_json=populations.find(query)
+    # convert it into a dataframe to work with it more easily
     total_population_df = pd.DataFrame(population_json)
+    # get the sum of all the LEP in new york city.
     total_population=sum(total_population_df['LEP Population (Estimate)'])
     response_dict = {}
+    # place sum into a json directory.
     response_dict["Language"]="All"
     response_dict["Total LEP population"] = total_population
     
 # information for BIGGEST  5 LEP communities
+# query only over 0 lep
     query={'LEP Population (Estimate)':{"$gt":0}}
+    # sort descending to get TOP 5 most populated
     sort=[('LEP Population (Estimate)',-1)]
+    # select specific fields for information you need ONLY.
     fields ={"Borough":1,"LEP Population (Estimate)":1,"Community District Name":1,"Language":1}
     limit=5
     demo_list= []
     demo_data=populations.find(query,fields).sort(sort).limit(limit)
+    # added to js directory 
     for each in demo_data:
         each.pop("_id")
         demo_list.append(each)
@@ -164,26 +171,40 @@ def demographics_all_api():
 
 @app.route("/demographic/<language>")
 def demographic_api(language):
+        # Filter out 0 in LEP Population (To not show languages  with 0 speakers every single time)
+
     query={'LEP Population (Estimate)':{"$gt":0}}
     population_json=populations.find(query)
+    # convert to dataframe to work with it with more ease.
     total_population_df = pd.DataFrame(population_json)
+    # get total population PER LANGUAGE
     total_population=sum(total_population_df['LEP Population (Estimate)'])
-
+# fetch only directories corresponding to specific language.
     match_query= {'$match':{'Language': language}}
+    # get the sum for each of the languages
     group_query = {'$group':{'_id':'$Language','sum':{'$sum':'$LEP Population (Estimate)'}}}
+    # create pipeline with match and groupby
     pipeline=[match_query,group_query]
+    # add to pipeline TOTAL LEP SPEAKERS to be able to calculate percentage
     language_sum= list(populations.aggregate(pipeline))[0]['sum']
+    # add it all into a dictionary
     result_dict={}
     result_dict['LEP Percentage']="{:.5%}".format(language_sum/total_population)
     result_dict['Language']=language
     result_dict['Total LEP population']=language_sum
     # 5 biggest communities that speak this language!!!!
+    # query with language filter
     query={'LEP Population (Estimate)':{"$gt":0},'Language':language}
+    # sort descending to get top 5 most populated per language
     sort=[('LEP Population (Estimate)',-1)]
+    # fetch only necessary fields
     fields ={"Borough":1,"LEP Population (Estimate)":1,"Community District Name":1}
+    # get only 5 of thosse 
     limit=5
     demo_list= []
+    # place all in one
     demo_data=populations.find(query,fields).sort(sort).limit(limit)
+    # make a dictionary for each of the elements.
     for each in demo_data:
         each.pop("_id")
         demo_list.append(each)
@@ -191,6 +212,7 @@ def demographic_api(language):
     return (result_dict)
 
 #Use render_template to return the dashboard HTML site
+# this last app.route solved our server to server issue. Use this route to run the whole code.
 @app.route("/endpoint")
 def endpoint():
     return (render_template('index.html'))
